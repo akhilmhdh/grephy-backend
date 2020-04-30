@@ -4,6 +4,7 @@ import cookieSession from "cookie-session";
 import "./config/config";
 
 import googleAuth from "./auth/google";
+import githubAuth from "./auth/github";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(
 );
 
 googleAuth(app);
+githubAuth(app);
 
 app.get("/", (req, res) => {
   res.send("hello world");
