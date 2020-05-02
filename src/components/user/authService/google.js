@@ -33,17 +33,4 @@ const getUserDetails = async (code) => {
   throw new Error(userInfo.status);
 };
 
-export default (app) => {
-  // routes to login via google
-  app.get("/auth/google", (req, res) => {
-    const url = getConnectionURL();
-    res.redirect(url);
-  });
-
-  // callback url route
-  app.get("/auth/google/callback", async (req, res) => {
-    const { code } = req.query;
-    const user = await getUserDetails(code);
-    res.send(user);
-  });
-};
+export default { getConnectionURL, getUserDetails };

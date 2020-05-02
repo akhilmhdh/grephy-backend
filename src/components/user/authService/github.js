@@ -29,21 +29,7 @@ const getUserInfo = async (accessToken) => {
   return data;
 };
 
-export default (app) => {
-  const scope = ["read:user", "user:email"].join(" ");
-  // oauth link
-  app.get("/auth/github", (req, res) => {
-    res.redirect(
-      `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&scope=${scope}`
-    );
-  });
-
-  // the callback function
-  app.get("/auth/github/callback", async (req, res) => {
-    const { code } = req.query;
-    // eslint-disable-next-line camelcase
-    const { access_token } = await getAccessToken(code);
-    const user = await getUserInfo(access_token);
-    res.send(user);
-  });
+export default {
+  getAccessToken,
+  getUserInfo,
 };
