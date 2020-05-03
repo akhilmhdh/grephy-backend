@@ -1,6 +1,9 @@
+/* eslint-disable no-console */
+// this file handles all aspects of networking
 import { createServer } from "http";
 
 import app from "../index";
+import db from "../db";
 
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
@@ -21,6 +24,14 @@ app.set("port", port);
 
 const server = createServer(app);
 
-server.listen(port, () => {
-  console.log(`Localhost:${port} running`);
+// for mongo connection pool
+db.connect(process.env.MONGO_DB_URL, (err) => {
+  if (err) {
+    console.log(err);
+    process.exit(0);
+  } else {
+    server.listen(port, () => {
+      console.log(`Localhost:${port} running`);
+    });
+  }
 });
