@@ -1,7 +1,7 @@
 import DB from "../../db";
 
 // Data Access layer for User login
-const UserLogin = async (uID, name, email, provider) => {
+const UserLogin = async ({ uID, name, email, provider }) => {
   const database = new DB();
   const collection = database.get.collection("users");
 
