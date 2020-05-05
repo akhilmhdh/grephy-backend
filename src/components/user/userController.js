@@ -48,9 +48,20 @@ const githubAuthCallback = async (req, res, next) => {
   next();
 };
 
+// logout function
+
+const logOut = (req, res, next) => {
+  if (req.session.user) {
+    req.session.user = null;
+  }
+  res.send("Logged out").status(200);
+  next();
+};
+
 export default {
   googleAuth,
   githubAuth,
   googleAuthCallback,
   githubAuthCallback,
+  logOut,
 };

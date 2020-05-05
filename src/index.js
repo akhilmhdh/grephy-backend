@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import "./config/config";
 
 import user from "./components/user";
+import channel from "./components/channel";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // express routes
 app.use("/users", user);
+app.use("/channels", channel);
 
 app.get("/", (req, res) => {
   res.send("Welcome Boy");

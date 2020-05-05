@@ -10,4 +10,6 @@ router.get("/auth/google/callback", userController.googleAuthCallback);
 router.get("/auth/github", userController.githubAuth);
 router.get("/auth/github/callback", userController.githubAuthCallback);
 
+router.get("/logout", userController.logOut);
+
 export default router;
