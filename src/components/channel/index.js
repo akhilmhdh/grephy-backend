@@ -6,7 +6,9 @@ const router = Router();
 
 router.post("/create", channelController.createChannel);
 
-router.post("/read", channelController.readChannel);
+router.post("/read/:id", channelController.readChannel);
+
+router.post("/list", channelController.listChannel);
 
 router.post("/update", channelController.updateChannel);
 
