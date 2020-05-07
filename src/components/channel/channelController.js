@@ -31,19 +31,29 @@ const readChannel = (req, res, next) => {
 };
 
 // update the channel for a user
-const updateChannel = (req, res, next) => {
-  // userid and channel name via channel token
-  const { _user, name } = JWT.JWTDecode(req.params.id);
-  const { description } = req.body;
-  // channel schema validate
-  const { error, value } = ChannelSchema.validate({
-    _user,
-    name,
-    description,
-  });
-  if (error) next(error);
-  channelService.updateChannel(value);
-  next();
+const updateChannel = async (req, res, next) => {
+  try {
+    // userid and channel name via channel token
+    const { _user, name } = JWT.JWTDecode(req.params.id);
+    const { newName, newDescription } = req.body;
+    // channel schema validate
+    const { error, value } = ChannelSchema.validate({
+      _user,
+      name: newName,
+      description: newDescription,
+    });
+    // to remove all non given things from null
+    Object.keys(value).forEach(
+      (key) => value[key] == null && delete value[key]
+    );
+    // validating
+    if (error) next(error);
+    const channel = await channelService.updateChannel(name, value);
+    res.send(channel).status(200);
+    next();
+  } catch (error) {
+    res.send(error).status(500);
+  }
 };
 
 const listChannel = (req, res, next) => {

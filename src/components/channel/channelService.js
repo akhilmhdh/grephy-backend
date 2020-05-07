@@ -12,6 +12,18 @@ const createChannel = async ({ _user, name, description }) => {
   };
 };
 
+const updateChannel = async (channelName, { _user, name, description }) => {
+  // create channel in database
+  const channel = await channelDAL.updateChannel(channelName, {
+    _user,
+    name,
+    description,
+  });
+  // return with token
+  return channel;
+};
+
 export default {
   createChannel,
+  updateChannel,
 };
