@@ -10,6 +10,8 @@ router.post("/read/:id", channelController.readChannel);
 
 router.post("/list", channelController.listChannel);
 
-router.post("/update", channelController.updateChannel);
+router.post("/update/:id", channelController.updateChannel);
 
-router.post("/delete", channelController.deleteChannel);
+router.post("/delete/:id", channelController.deleteChannel);
+
+export default router;

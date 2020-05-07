@@ -19,14 +19,16 @@ app.use(
   })
 );
 
+// bodyparser middleware to parse json and url codes
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // express routes
 app.use("/users", user);
 app.use("/channels", channel);
 
 app.get("/", (req, res) => {
-  res.send("Welcome Boy");
+  res.send(req.session.user);
 });
 
 export default app;
