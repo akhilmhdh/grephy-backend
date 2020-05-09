@@ -8,25 +8,16 @@ const createChannel = async ({ _user, name, description }) => {
   // return with token
   return {
     ...channel,
-    token: JWT.JWTEncode({ _user: channel._user, name: channel.name }),
+    token: JWT.JWTEncode({ _id: channel._id }),
   };
 };
 
-const updateChannel = async (channelName, { _user, name, description }) => {
+const updateChannel = async (_id, channelUpdatedData) => {
   // update channel in database
-  const channel = await channelDAL.updateChannel(channelName, {
-    _user,
-    name,
-    description,
-  });
+  const channel = await channelDAL.updateChannel(_id, channelUpdatedData);
   // return with token
-  if (channel.nModified) {
-    return {
-      name,
-      description,
-      token: JWT.JWTEncode({ _user: channel._user, name: channel.name }),
-    };
-  }
+  if (channel.result.nModified) return "Updated Successfully";
+
   return "Didn't changed anything";
 };
 
@@ -36,14 +27,15 @@ const listChannels = async (_user) => {
   // adds each channel with a token
   return channel.map((el) => ({
     ...el,
-    token: JWT.JWTEncode({ _user: el._user, name: el.name }),
+    token: JWT.JWTEncode({ _id: el._id }),
   }));
 };
 
 // delete a channel of a user
-const deleteChannel = async (channelData) => {
-  const channel = await channelDAL.deleteChannel(channelData);
-  return channel;
+const deleteChannel = async (channelID) => {
+  const channel = await channelDAL.deleteChannel(channelID);
+  if (channel.result.n) return "Deleted Successfully";
+  return "Channel Deletetion Failure";
 };
 
 export default {
