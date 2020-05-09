@@ -29,7 +29,17 @@ const updateChannel = async (channelName, databaseValue) => {
   return channel;
 };
 
+const listChannels = async (_user) => {
+  const database = new DB();
+  const collection = database.get.collection("channels");
+
+  // fetch all channels of the user
+  const channel = await collection.find(_user).toArray();
+  return channel;
+};
+
 export default {
   createChannel,
   updateChannel,
+  listChannels,
 };

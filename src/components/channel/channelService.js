@@ -30,7 +30,18 @@ const updateChannel = async (channelName, { _user, name, description }) => {
   return "Didn't changed anything";
 };
 
+// list all the channels user has
+const listChannels = async (_user) => {
+  const channel = await channelDAL.listChannels(_user);
+  // adds each channel with a token
+  return channel.map((el) => ({
+    ...el,
+    token: JWT.JWTEncode({ _user: el._user, name: el.name }),
+  }));
+};
+
 export default {
   createChannel,
   updateChannel,
+  listChannels,
 };

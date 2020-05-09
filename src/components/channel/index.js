@@ -8,7 +8,7 @@ router.post("/create", channelController.createChannel);
 
 router.post("/read/:id", channelController.readChannel);
 
-router.post("/list", channelController.listChannel);
+router.get("/list", channelController.listChannels);
 
 router.post("/update/:id", channelController.updateChannel);
 

@@ -56,16 +56,22 @@ const updateChannel = async (req, res, next) => {
   }
 };
 
-const listChannel = (req, res, next) => {
-  const { id } = JWT.JWTDecode(req.session.user);
-  // channel schemea validate
-  const { error, value } = ChannelSchema.validate({
-    _user: id,
-  });
-  if (error) next(error);
-  // service to delete a channel
-  channelService.deleteChannel(value);
-  next();
+const listChannels = async (req, res, next) => {
+  try {
+    const { id } = JWT.JWTDecode(req.session.user);
+    // channel schemea validate
+    const { error, value } = ChannelSchema.validate({
+      _user: id,
+    });
+    if (error) next(error);
+    // service to delete a channel
+    const channel = await channelService.listChannels(value);
+    res.send(channel).status(200);
+    next();
+  } catch (error) {
+    res.status(500);
+    next(error);
+  }
 };
 
 // delete channel of a user
@@ -86,6 +92,6 @@ export default {
   createChannel,
   readChannel,
   updateChannel,
-  listChannel,
+  listChannels,
   deleteChannel,
 };
