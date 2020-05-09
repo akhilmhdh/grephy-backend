@@ -38,8 +38,18 @@ const listChannels = async (_user) => {
   return channel;
 };
 
+const deleteChannel = async (channelData) => {
+  const database = new DB();
+  const collection = database.get.collection("channels");
+
+  // fetch all channels of the user
+  const channel = await collection.deleteOne(channelData);
+  return channel;
+};
+
 export default {
   createChannel,
   updateChannel,
   listChannels,
+  deleteChannel,
 };

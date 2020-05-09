@@ -40,8 +40,15 @@ const listChannels = async (_user) => {
   }));
 };
 
+// delete a channel of a user
+const deleteChannel = async (channelData) => {
+  const channel = await channelDAL.deleteChannel(channelData);
+  return channel;
+};
+
 export default {
   createChannel,
   updateChannel,
   listChannels,
+  deleteChannel,
 };
