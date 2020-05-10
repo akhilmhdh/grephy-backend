@@ -12,9 +12,9 @@ const createChannel = async ({ _user, name, description }) => {
   };
 };
 
-const updateChannel = async (_id, channelUpdatedData) => {
+const updateChannel = async (query, channelUpdatedData) => {
   // update channel in database
-  const channel = await channelDAL.updateChannel(_id, channelUpdatedData);
+  const channel = await channelDAL.updateChannel(query, channelUpdatedData);
   // return with token
   if (channel.result.nModified) return "Updated Successfully";
 
@@ -22,8 +22,8 @@ const updateChannel = async (_id, channelUpdatedData) => {
 };
 
 // list all the channels user has
-const listChannels = async (_user) => {
-  const channel = await channelDAL.listChannels(_user);
+const listChannels = async (user) => {
+  const channel = await channelDAL.listChannels(user);
   // adds each channel with a token
   return channel.map((el) => ({
     ...el,
@@ -32,8 +32,9 @@ const listChannels = async (_user) => {
 };
 
 // delete a channel of a user
-const deleteChannel = async (channelID) => {
-  const channel = await channelDAL.deleteChannel(channelID);
+const deleteChannel = async (query) => {
+  // pass data to DAL layer
+  const channel = await channelDAL.deleteChannel(query);
   if (channel.result.n) return "Deleted Successfully";
   return "Channel Deletetion Failure";
 };

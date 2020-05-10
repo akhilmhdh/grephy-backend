@@ -34,12 +34,14 @@ const readChannel = (req, res, next) => {
 const updateChannel = async (req, res, next) => {
   try {
     // userid and channel name via channel token
-    const { _id } = JWT.JWTDecode(req.params.id);
-    const { name, description } = req.body;
+    const { id } = JWT.JWTDecode(req.session.user);
+    const { channelName, newChannelName, newDescription } = req.body;
+    // basic channel name validation
+    if (!channelName) next("Channel name must be provided");
     // channel schema validate
     const { error, value } = ChannelSchema.validate({
-      name,
-      description,
+      name: newChannelName,
+      description: newDescription,
     });
     // to remove all non given things from null
     Object.keys(value).forEach(
@@ -47,8 +49,11 @@ const updateChannel = async (req, res, next) => {
     );
     // validating
     if (error) next(error);
-    const channel = await channelService.updateChannel(_id, value);
-    res.send(channel).status(200);
+    const updateStatus = await channelService.updateChannel(
+      { _user: id, name: channelName },
+      value
+    );
+    res.send(updateStatus).status(200);
     next();
   } catch (error) {
     res.send(error).status(500);
@@ -77,10 +82,18 @@ const listChannels = async (req, res, next) => {
 const deleteChannel = async (req, res, next) => {
   try {
     // userid and channel name via channel token
-    const { _id } = JWT.JWTDecode(req.params.id);
-
-    const channel = await channelService.deleteChannel(_id);
-    res.send(channel).status(200);
+    const { id } = JWT.JWTDecode(req.session.user);
+    // get channel name to be deleted
+    const { channelName } = req.body;
+    // schema validation
+    const { error, value } = ChannelSchema.validate({
+      _user: id,
+      name: channelName,
+    });
+    if (error) next(error);
+    // status of deletion
+    const status = await channelService.deleteChannel(value);
+    res.send(status).status(200);
     next();
   } catch (error) {
     next(error);
