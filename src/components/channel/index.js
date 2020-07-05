@@ -6,12 +6,12 @@ const router = Router();
 
 router.post("/create", channelController.createChannel);
 
-router.post("/read", channelController.readChannel);
+router.post("/read/:id", channelController.readChannel);
 
 router.get("/list", channelController.listChannels);
 
-router.post("/update", channelController.updateChannel);
+router.post("/update/:id", channelController.updateChannel);
 
-router.post("/delete", channelController.deleteChannel);
+router.post("/delete/:id", channelController.deleteChannel);
 
 export default router;

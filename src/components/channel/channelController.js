@@ -11,6 +11,7 @@ const createChannel = async (req, res, next) => {
   try {
     const { name, description } = req.body;
     const { id } = JWT.JWTDecode(req.session.user);
+
     // validate schema
     const { error, value } = createChannelSchema.validate({
       _user: id,
@@ -18,6 +19,7 @@ const createChannel = async (req, res, next) => {
       description,
     });
     if (error) next(error);
+
     // create channel in db
     const channel = await channelService.createChannel(value);
     res.send(channel).status(200);
@@ -38,26 +40,30 @@ const updateChannel = async (req, res, next) => {
 
   try {
     // userid and channel name via channel token
-    const { id } = JWT.JWTDecode(req.session.user);
-    const { channelName, newChannelName, newDescription } = req.body;
-    // basic channel name validation
-    if (!channelName) next("Channel name must be provided");
+    const { userID } = JWT.JWTDecode(req.session.user);
+    const { id } = req.query;
+
+    const { name, description } = req.body;
+
     // channel schema validate
     const { error, value } = updateChannelSchema.validate({
-      name: newChannelName,
-      description: newDescription,
+      _user: userID,
+      _id: id,
+      name,
+      description,
     });
+
     // to remove all non given things from null
     Object.keys(value).forEach(
       (key) => value[key] == null && delete value[key]
     );
     // validating
     if (error) next(error);
-    const updateStatus = await channelService.updateChannel(
-      { _user: id, name: channelName },
-      value
-    );
-    res.send(updateStatus).status(200);
+    // const updateStatus = await channelService.updateChannel(
+    //   { _user: id, name: channelName },
+    //   value
+    // );
+    // res.send(updateStatus).status(200);
     next();
   } catch (error) {
     res.send(error).status(500);
@@ -68,11 +74,13 @@ const listChannels = async (req, res, next) => {
   const { listChannelSchema } = channelValidator;
 
   try {
-    const { id } = JWT.JWTDecode(req.session.user);
+    const { userID } = JWT.JWTDecode(req.session.user);
+
     // channel schemea validate
     const { error, value } = listChannelSchema.validate({
-      _user: id,
+      _user: userID,
     });
+
     if (error) next(error);
     // service to delete a channel
     const channel = await channelService.listChannels(value);
@@ -90,13 +98,15 @@ const deleteChannel = async (req, res, next) => {
 
   try {
     // userid and channel name via channel token
-    const { id } = JWT.JWTDecode(req.session.user);
+    const { userID } = JWT.JWTDecode(req.session.user);
+
     // get channel name to be deleted
-    const { channelName } = req.body;
+    const { id } = req.query;
+
     // schema validation
     const { error, value } = deleteChannelSchema.validate({
-      _user: id,
-      name: channelName,
+      _user: userID,
+      _id: id,
     });
     if (error) next(error);
     // status of deletion
