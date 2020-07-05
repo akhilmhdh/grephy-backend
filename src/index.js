@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 // express routes
 app.use("/users", user);
 app.use("/channels", channel);
-// app.use("/channels/graph", graph);
+app.use("/channels/graph", graph);
 
 app.get("/", (req, res) => {
   res.send(req.session.user);
