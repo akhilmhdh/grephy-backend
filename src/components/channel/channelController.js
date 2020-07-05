@@ -59,11 +59,8 @@ const updateChannel = async (req, res, next) => {
     );
     // validating
     if (error) next(error);
-    // const updateStatus = await channelService.updateChannel(
-    //   { _user: id, name: channelName },
-    //   value
-    // );
-    // res.send(updateStatus).status(200);
+    const updateStatus = await channelService.updateChannel(value);
+    res.send(updateStatus).status(200);
     next();
   } catch (error) {
     res.send(error).status(500);
