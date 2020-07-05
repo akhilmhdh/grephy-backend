@@ -19,13 +19,13 @@ import Joi from "@hapi/joi";
 //   ),
 // });
 
-const createChannel = Joi.object({
+const createChannelSchema = Joi.object({
   _user: Joi.string().min(1).max(50).required(),
   name: Joi.string().min(1).max(50).trim().required(),
   description: Joi.string().min(1).max(150).trim().required(),
 });
 
-const updateChannel = Joi.object({
+const updateChannelSchema = Joi.object({
   _id: Joi.string()
     .regex(/^[0-9a-fA-F]{24}$/)
     .required(),
@@ -37,28 +37,28 @@ const updateChannel = Joi.object({
   description: Joi.string().min(1).max(150).trim(),
 });
 
-const readChannel = Joi.object({
+const readChannelSchema = Joi.object({
   _id: Joi.string()
     .regex(/^[0-9a-fA-F]{24}$/)
     .required(),
 });
 
-const listChannel = Joi.object({
+const listChannelSchema = Joi.object({
   _user: Joi.string()
     .regex(/^[0-9a-fA-F]{24}$/)
     .required(),
 });
 
-const deleteChannel = Joi.object({
+const deleteChannelSchema = Joi.object({
   _id: Joi.string()
     .regex(/^[0-9a-fA-F]{24}$/)
     .required(),
 });
 
 export default {
-  createChannel,
-  updateChannel,
-  listChannel,
-  readChannel,
-  deleteChannel,
+  createChannelSchema,
+  updateChannelSchema,
+  listChannelSchema,
+  readChannelSchema,
+  deleteChannelSchema,
 };
