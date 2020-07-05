@@ -1,6 +1,5 @@
 import express from "express";
 import cookieSession from "cookie-session";
-import bodyParser from "body-parser";
 
 import "./config/config";
 
@@ -21,8 +20,8 @@ app.use(
 );
 
 // bodyparser middleware to parse json and url codes
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // express routes
 app.use("/users", user);
