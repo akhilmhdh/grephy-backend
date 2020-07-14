@@ -28,12 +28,6 @@ const createChannelSchema = Joi.object({
 });
 
 const updateChannelSchema = Joi.object({
-  _id: Joi.string()
-    .regex(/^[0-9a-fA-F]{24}$/)
-    .required(),
-  _user: Joi.string()
-    .regex(/^[0-9a-fA-F]{24}$/)
-    .required("Unauthorized"),
   name: Joi.string().min(1).max(50).trim(),
   description: Joi.string().min(1).max(150).trim(),
 });

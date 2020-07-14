@@ -10,11 +10,11 @@ const createChannel = async (req, res, next) => {
 
   try {
     const { name, description } = req.body;
-    const { id } = JWT.JWTDecode(req.session.user);
+    const { userID } = JWT.JWTDecode(req.session.user);
 
     // validate schema
     const { error, value } = createChannelSchema.validate({
-      _user: id,
+      _user: userID,
       name,
       description,
     });
@@ -41,25 +41,23 @@ const updateChannel = async (req, res, next) => {
   try {
     // userid and channel name via channel token
     const { userID } = JWT.JWTDecode(req.session.user);
-    const { id } = req.query;
-
+    const { id } = req.params;
     const { name, description } = req.body;
 
     // channel schema validate
     const { error, value } = updateChannelSchema.validate({
-      _user: userID,
-      _id: id,
       name,
       description,
     });
 
-    // to remove all non given things from null
+    // validating
+    if (error) next(error);
+
     Object.keys(value).forEach(
       (key) => value[key] == null && delete value[key]
     );
-    // validating
-    if (error) next(error);
-    const updateStatus = await channelService.updateChannel(value);
+
+    const updateStatus = await channelService.updateChannel(id, userID, value);
     res.send(updateStatus).status(200);
     next();
   } catch (error) {

@@ -10,7 +10,7 @@ router.post("/read/:id", channelController.readChannel);
 
 router.get("/list", channelController.listChannels);
 
-router.post("/update/:id", channelController.updateChannel);
+router.put("/update/:id", channelController.updateChannel);
 
 router.post("/delete/:id", channelController.deleteChannel);
 

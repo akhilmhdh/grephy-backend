@@ -24,7 +24,7 @@ const googleOauth = async (code) => {
   }
   // to user collection
   const user = await userDAL.UserLogin(value);
-  const token = JWT.JWTEncode({ id: user._id });
+  const token = JWT.JWTEncode({ userID: user._id });
   return token;
 };
 
@@ -45,7 +45,7 @@ const githubOauth = async (code) => {
   }
   // to user collection
   const user = await userDAL.UserLogin(value);
-  const token = JWT.JWTEncode({ id: user._id });
+  const token = JWT.JWTEncode({ userID: user._id });
   return token;
 };
 

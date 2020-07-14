@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+import { ObjectID } from "mongodb";
 import channelDAL from "./channelDAL";
 import JWT from "../utils/jwt";
 
@@ -12,12 +13,15 @@ const createChannel = async ({ _user, name, description }) => {
   };
 };
 
-const updateChannel = async (query, channelUpdatedData) => {
+const updateChannel = async (id, _user, channelUpdatedData) => {
   // update channel in database
-  const channel = await channelDAL.updateChannel(query, channelUpdatedData);
+  const _id = new ObjectID(id);
+  const channel = await channelDAL.updateChannel(
+    { _id, _user },
+    channelUpdatedData
+  );
   // return with token
   if (channel.result.nModified) return "Updated Successfully";
-
   return "Didn't changed anything";
 };
 
