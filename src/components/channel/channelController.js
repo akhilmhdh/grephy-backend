@@ -1,7 +1,7 @@
 import JWT from "../utils/jwt";
+import santizeObject from "../utils/sanitizeObject";
 
 import channelValidator from "./channelValidator";
-
 import channelService from "./channelService";
 
 // to create channels for a user
@@ -53,11 +53,13 @@ const updateChannel = async (req, res, next) => {
     // validating
     if (error) next(error);
 
-    Object.keys(value).forEach(
-      (key) => value[key] == null && delete value[key]
-    );
+    const sanitizedValue = santizeObject(value);
 
-    const updateStatus = await channelService.updateChannel(id, userID, value);
+    const updateStatus = await channelService.updateChannel(
+      id,
+      userID,
+      sanitizedValue
+    );
     res.send(updateStatus).status(200);
     next();
   } catch (error) {
