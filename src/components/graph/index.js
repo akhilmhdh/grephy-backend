@@ -8,8 +8,8 @@ router.post("/create", graphController.createGraph);
 
 router.get("/read/:id", graphController.readGraph);
 
-router.get("/update", graphController.updateGraph);
+router.put("/update/;id", graphController.updateGraph);
 
-router.post("/delete", graphController.deleteGraph);
+router.delete("/delete/:id", graphController.deleteGraph);
 
 export default router;
