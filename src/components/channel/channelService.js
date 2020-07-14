@@ -36,9 +36,10 @@ const listChannels = async (user) => {
 };
 
 // delete a channel of a user
-const deleteChannel = async (query) => {
+const deleteChannel = async (id, _user) => {
   // pass data to DAL layer
-  const channel = await channelDAL.deleteChannel(query);
+  const _id = new ObjectID(id);
+  const channel = await channelDAL.deleteChannel({ _id, _user });
   if (channel.result.n) return "Deleted Successfully";
   return "Channel Deletetion Failure";
 };

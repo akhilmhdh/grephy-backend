@@ -89,23 +89,15 @@ const listChannels = async (req, res, next) => {
 
 // delete channel of a user
 const deleteChannel = async (req, res, next) => {
-  const { deleteChannelSchema } = channelValidator;
-
   try {
     // userid and channel name via channel token
     const { userID } = JWT.JWTDecode(req.session.user);
 
     // get channel name to be deleted
-    const { id } = req.query;
+    const { id } = req.params;
 
-    // schema validation
-    const { error, value } = deleteChannelSchema.validate({
-      _user: userID,
-      _id: id,
-    });
-    if (error) next(error);
     // status of deletion
-    const status = await channelService.deleteChannel(value);
+    const status = await channelService.deleteChannel(id, userID);
     res.send(status).status(200);
     next();
   } catch (error) {
