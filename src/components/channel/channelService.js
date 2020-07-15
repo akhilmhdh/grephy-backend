@@ -29,10 +29,7 @@ const updateChannel = async (id, _user, channelUpdatedData) => {
 const listChannels = async (user) => {
   const channel = await channelDAL.listChannels(user);
   // adds each channel with a token
-  return channel.map((el) => ({
-    ...el,
-    token: JWT.JWTEncode({ _id: el._id }),
-  }));
+  return channel;
 };
 
 // delete a channel of a user

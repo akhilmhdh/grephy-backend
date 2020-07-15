@@ -3,9 +3,6 @@ import Joi from "@hapi/joi";
 // data: Joi.object().pattern(Joi.any().valid(Joi.in("yAxis")), Joi.number()),
 
 const createGraphSchema = Joi.object({
-  _channel: Joi.string()
-    .regex(/^[0-9a-fA-F]{24}$/)
-    .required(),
   name: Joi.string().min(1).max(50).trim().required(),
   description: Joi.string().min(1).max(150).trim().required(),
   title: Joi.string().min(1).max(50).trim().required(),
