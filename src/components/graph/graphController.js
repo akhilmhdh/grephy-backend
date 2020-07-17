@@ -20,7 +20,7 @@ const createGraph = async (req, res, next) => {
 
     if (error) next(error);
 
-    const graph = await graphService.createGraph(userID, _channel, value);
+    const graph = await graphService.createGraph(userID, _channel, value, next);
 
     res.send(graph).status(200);
   } catch (error) {

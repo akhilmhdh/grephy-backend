@@ -28,6 +28,11 @@ app.use("/users", user);
 app.use("/channels", channel);
 app.use("/channels/graph", graph);
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+
 app.get("/", (req, res) => {
   res.send(req.session.user);
 });

@@ -29,6 +29,7 @@
     "googleapis": "^49.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.7",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "winston": "^3.3.3"
   }
 }
