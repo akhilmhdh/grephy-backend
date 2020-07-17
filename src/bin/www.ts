@@ -5,7 +5,7 @@ import { createServer } from "http";
 import app from "../index";
 import db from "../db";
 
-const normalizePort = (val) => {
+const normalizePort = (val: string) => {
   const port = parseInt(val, 10);
   // eslint-disable-next-line no-restricted-globals
   if (isNaN(port)) {
@@ -25,7 +25,7 @@ app.set("port", port);
 const server = createServer(app);
 
 // for mongo connection pool
-db.connect(process.env.MONGO_DB_URL, (err) => {
+db.connect(process.env.MONGO_DB_URL, (err: string) => {
   if (err) {
     console.log(err);
     process.exit(0);
