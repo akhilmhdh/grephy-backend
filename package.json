@@ -4,8 +4,8 @@
   "description": "The complete backend of Grephy",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/bin/www.js",
-    "lint": "eslint --fix --ext .js,.jsx .",
+    "start": "webpack-dev-server --mode development",
+    "lint": "eslint --fix --ext .ts .js,.jsx .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "akhi",
@@ -14,14 +14,18 @@
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.5",
+    "@types/express": "^4.17.7",
+    "@types/node": "^14.0.23",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7",
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
-    "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.19.2",
     "cookie-session": "^1.4.0",
     "eslint-config-prettier": "^6.11.0",
@@ -31,7 +35,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.7",
     "prettier": "^2.0.5",
-    "source-map-loader": "^1.0.1",
+    "ts-loader": "^8.0.1",
+    "webpack": "^4.43.0",
+    "webpack-dev-server": "^3.11.0",
     "winston": "^3.3.3"
   }
 }

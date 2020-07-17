@@ -5,9 +5,11 @@ module.exports = {
   },
   extends: [
     'airbnb-base',
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
     'prettier'
   ],
-  plugins: ["prettier"],
+  plugins: ["@typescript-eslint","prettier"],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -18,6 +20,7 @@ module.exports = {
   },
   rules: {
     "prettier/prettier": ["error",{endOfLine:"auto"}],
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "no-console": 2 
   },
 };
