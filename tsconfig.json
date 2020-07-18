@@ -2,12 +2,13 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "noImplicitAny": true,
-    "module": "ES6",
+    "module": "commonjs",
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "target": "es6",
+    "target": "es2017",
+    "esModuleInterop": true,
     "types": [],
     "typeRoots": ["src/types", "node_modules/@types"],
     "lib": [

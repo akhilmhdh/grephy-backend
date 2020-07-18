@@ -1,4 +1,4 @@
-import express, { ErrorRequestHandler } from "express";
+import express from "express";
 import cookieSession from "cookie-session";
 
 import "./config/config";
@@ -27,13 +27,6 @@ app.use(express.json());
 // app.use("/users", user);
 // app.use("/channels", channel);
 // app.use("/channels/graph", graph);
-
-app.use(
-  (err, req, res, next): ErrorRequestHandler => {
-    console.error(err.stack);
-    res.status(500).send("Something broke!");
-  }
-);
 
 app.get("/", (req, res) => {
   res.send(req.session.user);
