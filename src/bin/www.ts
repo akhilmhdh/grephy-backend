@@ -25,7 +25,7 @@ app.set("port", port);
 const server = createServer(app);
 
 // for mongo connection pool
-db.connect(process.env.MONGO_DB_URL, (err: string) => {
+db.connect(process.env.MONGO_DB_URL, (err) => {
   if (err) {
     console.log(err);
     process.exit(0);
