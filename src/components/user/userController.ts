@@ -1,17 +1,22 @@
 // to generate the custom url for google oauth
+import { RequestHandler, Request, Response, NextFunction } from "express";
 import googleService from "./authService/google";
 
 import userService from "./userService";
 
 // google oauth controller
-const googleAuth = (req, res, next) => {
+const googleAuth = (req: Request, res: Response, next: NextFunction): void => {
   const url = googleService.getConnectionURL();
   res.redirect(url);
   next();
 };
 
 // google redirect controller
-const googleAuthCallback = async (req, res, next) => {
+const googleAuthCallback = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
   const { code } = req.query;
   try {
     const token = await userService.googleOauth(code);
@@ -25,7 +30,7 @@ const googleAuthCallback = async (req, res, next) => {
 };
 
 // github oauth controller
-const githubAuth = (req, res, next) => {
+const githubAuth = (req: Request, res: Response, next: NextFunction): void => {
   const scope = ["read:user", "user:email"].join(" ");
   res.redirect(
     `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&scope=${scope}`
@@ -34,7 +39,11 @@ const githubAuth = (req, res, next) => {
 };
 
 // github oauth callback controller
-const githubAuthCallback = async (req, res, next) => {
+const githubAuthCallback = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { code } = req.query;
   try {
     const token = await userService.githubOauth(code);
@@ -50,7 +59,7 @@ const githubAuthCallback = async (req, res, next) => {
 
 // logout function
 
-const logOut = (req, res, next) => {
+const logOut = (req: Request, res: Response, next: NextFunction) => {
   if (req.session.user) {
     req.session.user = null;
   }
