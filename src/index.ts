@@ -1,6 +1,7 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cookieSession from "cookie-session";
 import dotenv from "dotenv";
+import { handleError, ErrorHandler } from "./components/utils/error";
 
 dotenv.config();
 
@@ -32,5 +33,12 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send(req.session.user);
 });
+
+app.use(
+  (err: ErrorHandler, req: Request, res: Response, next: NextFunction) => {
+    handleError(err, res);
+    next();
+  }
+);
 
 export default app;
