@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import winston from "winston";
+import chalk from "chalk";
 
 const customLevels = {
   levels: {
@@ -57,23 +58,23 @@ class Logger {
   }
 
   debug(msg: any, meta?: any) {
-    this.logger.debug(msg, meta);
+    this.logger.debug(chalk.blue.bold(msg), meta);
   }
 
   info(msg: any, meta?: any) {
-    this.logger.info(msg, meta);
+    this.logger.info(chalk.cyan.bold(msg), meta);
   }
 
   warn(msg: any, meta?: any) {
-    this.logger.warn(msg, meta);
+    this.logger.warn(chalk.yellow.bold(msg), meta);
   }
 
   error(msg: any, meta?: any) {
-    this.logger.error(msg, meta);
+    this.logger.error(chalk.red.bold(msg), meta);
   }
 
   fatal(msg: any, meta?: any) {
-    this.logger.log("fatal", msg, meta);
+    this.logger.log("fatal", chalk.red.bold(msg), meta);
   }
 }
 
