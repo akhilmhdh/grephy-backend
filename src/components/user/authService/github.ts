@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // To get the access token frm github
-const getAccessToken = async (code) => {
+const getAccessToken = async (code: string): Promise<string> => {
   const { data } = await axios({
     url: "https://github.com/login/oauth/access_token",
     method: "post",
@@ -18,7 +18,7 @@ const getAccessToken = async (code) => {
 };
 
 // using token getting the user profile data
-const getUserInfo = async (accessToken) => {
+const getUserInfo = async (accessToken: string): Promise<unknown> => {
   const { data } = await axios({
     url: "https://api.github.com/user",
     method: "get",

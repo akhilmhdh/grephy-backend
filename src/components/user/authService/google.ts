@@ -16,7 +16,7 @@ const defaultScope = [
 ];
 
 // redirect url to google
-const getConnectionURL = () => {
+const getConnectionURL = (): string => {
   return Oauth2Client.generateAuthUrl({
     access_type: "offline",
     prompt: "consent",
@@ -25,7 +25,7 @@ const getConnectionURL = () => {
 };
 
 // getting data from the callback url
-const getUserDetails = async (code) => {
+const getUserDetails = async (code: string): Promise<unknown> => {
   const { tokens } = await Oauth2Client.getToken(code);
   Oauth2Client.setCredentials(tokens);
   const userInfo = await oauth2.userinfo.get({ auth: Oauth2Client });

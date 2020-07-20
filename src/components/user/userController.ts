@@ -13,6 +13,7 @@ const googleAuth: RequestHandler = (req, res, next) => {
 
 // google redirect controller
 const googleAuthCallback: RequestHandler = async (req, res, next) => {
+  // parse the unqiue code from url
   const { code } = req.query;
   try {
     const token = await userService.googleOauth(code);
