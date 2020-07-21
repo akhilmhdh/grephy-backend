@@ -14,8 +14,7 @@ const UserLogin = async ({
   email,
   provider,
 }: arg): Promise<string> => {
-  const database = new DB();
-  const collection = database.get.collection("users");
+  const collection = DB.client.db("Grephy").collection("users");
   // checks for existing user if found return it
   const existingUser = await collection.findOne({ uID, name, provider });
   if (existingUser) return existingUser;

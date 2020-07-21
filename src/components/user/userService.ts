@@ -24,6 +24,7 @@ const googleOauth = async (code: string): Promise<string> => {
 
   // to user collection
   const user = await userDAL.UserLogin(value);
+
   const token = JWT.JWTEncode({ userID: user._id });
   return token;
 };

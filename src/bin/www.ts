@@ -3,7 +3,7 @@ import { createServer } from "http";
 
 import { logger } from "../components/utils/logger";
 import app from "../index";
-import db from "../db";
+import mongo from "../db";
 
 const normalizePort = (val: string) => {
   const port = parseInt(val, 10);
@@ -25,7 +25,7 @@ app.set("port", port);
 const server = createServer(app);
 
 // for mongo connection pool
-db.connect(process.env.MONGO_DB_URL, (err) => {
+mongo.connect(process.env.MONGO_DB_URL, (err) => {
   if (err) {
     logger.error(err);
     process.exit(0);
