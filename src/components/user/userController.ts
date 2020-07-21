@@ -37,7 +37,7 @@ const githubAuth: RequestHandler = (req, res, next) => {
 
 // github oauth callback controller
 const githubAuthCallback: RequestHandler = async (req, res, next) => {
-  const { code } = req.query;
+  const { code } = <string>req.query;
   try {
     const token = await userService.githubOauth(code);
     req.session.user = token;

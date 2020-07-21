@@ -1,7 +1,19 @@
 import DB from "../../db";
 
+interface arg {
+  uID: string;
+  name: string;
+  email: string;
+  provider: string;
+}
+
 // Data Access layer for User login
-const UserLogin = async ({ uID, name, email, provider }) => {
+const UserLogin = async ({
+  uID,
+  name,
+  email,
+  provider,
+}: arg): Promise<string> => {
   const database = new DB();
   const collection = database.get.collection("users");
   // checks for existing user if found return it
