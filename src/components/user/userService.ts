@@ -11,8 +11,13 @@ import userDAL from "./userDAL";
 // google authentication
 const googleOauth = async (code: string): Promise<string> => {
   const {
-    data: { id, name, email },
+    err,
+    userInfo: {
+      data: { id, name, email },
+    },
   } = await googleService.getUserDetails(code);
+  if (err) throw new ErrorHandler(404, "Google api failed");
+
   // user schema validator
   const { error, value } = UserSchema.validate({
     uID: id,
@@ -25,7 +30,7 @@ const googleOauth = async (code: string): Promise<string> => {
   // to user collection
   const user = await userDAL.UserLogin(value);
 
-  const token = JWT.JWTEncode({ userID: user._id });
+  const token = JWT.JWTEncode({ userID: user.ops[0]._id });
   return token;
 };
 
@@ -46,7 +51,7 @@ const githubOauth = async (code: string): Promise<string> => {
   }
   // to user collection
   const user = await userDAL.UserLogin(value);
-  const token = JWT.JWTEncode({ userID: user._id });
+  const token = JWT.JWTEncode({ userID: user.ops[0]._id });
   return token;
 };
 

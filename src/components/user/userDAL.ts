@@ -1,4 +1,5 @@
 import DB from "../../db";
+import { InsertOneWriteOpResult } from "mongodb";
 
 interface arg {
   uID: string;
@@ -13,14 +14,14 @@ const UserLogin = async ({
   name,
   email,
   provider,
-}: arg): Promise<string> => {
+}: arg): Promise<InsertOneWriteOpResult<{ _id: unknown }>> => {
   const collection = DB.client.db("Grephy").collection("users");
   // checks for existing user if found return it
   const existingUser = await collection.findOne({ uID, name, provider });
   if (existingUser) return existingUser;
   // if not existing create a new user doc
   const user = await collection.insertOne({ uID, name, email, provider });
-  return user.ops[0];
+  return user;
 };
 
 export default {

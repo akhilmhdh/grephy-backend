@@ -16,7 +16,7 @@ const googleAuthCallback: RequestHandler = async (req, res, next) => {
   // parse the unqiue code from url
   const { code } = req.query;
   try {
-    const token = await userService.googleOauth(code);
+    const token = await userService.googleOauth(code as string);
     req.session.user = token;
     res.send("logged in").status(200);
     next();
@@ -37,9 +37,9 @@ const githubAuth: RequestHandler = (req, res, next) => {
 
 // github oauth callback controller
 const githubAuthCallback: RequestHandler = async (req, res, next) => {
-  const { code } = <string>req.query;
+  const { code } = req.query;
   try {
-    const token = await userService.githubOauth(code);
+    const token = await userService.githubOauth(code as string);
     req.session.user = token;
     res.send("logged in").status(200);
     next();

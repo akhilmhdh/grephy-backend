@@ -24,13 +24,19 @@ const getConnectionURL = (): string => {
   });
 };
 
+interface userDetails {
+  err: number | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  userInfo: any;
+}
+
 // getting data from the callback url
-const getUserDetails = async (code: string): Promise<unknown> => {
+const getUserDetails = async (code: string): Promise<userDetails> => {
   const { tokens } = await Oauth2Client.getToken(code);
   Oauth2Client.setCredentials(tokens);
   const userInfo = await oauth2.userinfo.get({ auth: Oauth2Client });
-  if (userInfo.status === 200) return userInfo;
-  throw new Error(userInfo.status);
+  if (userInfo.status === 200) return { err: null, userInfo };
+  return { err: userInfo.status, userInfo: null };
 };
 
 export default { getConnectionURL, getUserDetails };
