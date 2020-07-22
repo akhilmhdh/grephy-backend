@@ -5,7 +5,7 @@ import { handleError, ErrorHandler } from "./components/utils/error";
 
 dotenv.config();
 
-// import user from "./components/user";
+import user from "./components/user";
 // import channel from "./components/channel";
 // import graph from "./components/graph";
 
@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // express routes
-// app.use("/users", user);
+app.use("/users", user);
 // app.use("/channels", channel);
 // app.use("/channels/graph", graph);
 
