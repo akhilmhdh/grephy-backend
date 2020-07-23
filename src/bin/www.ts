@@ -1,7 +1,7 @@
 // this file handles all aspects of networking
 import { createServer } from "http";
 
-import { logger } from "../components/utils/logger";
+import { logger } from "../config/logger";
 import app from "../index";
 import mongo from "../db";
 

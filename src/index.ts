@@ -1,7 +1,9 @@
 import express, { Request, Response, NextFunction } from "express";
 import cookieSession from "cookie-session";
+import morgan from "morgan";
 import dotenv from "dotenv";
 import { handleError, ErrorHandler } from "./components/utils/error";
+import { stream, logger } from "./config/logger";
 
 dotenv.config();
 
@@ -21,6 +23,13 @@ app.use(
   })
 );
 
+//morgan logging middleware
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms", {
+    stream,
+  })
+);
+
 // bodyparser middleware to parse json and url codes
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -31,7 +40,8 @@ app.use("/users", user);
 // app.use("/channels/graph", graph);
 
 app.get("/", (req, res) => {
-  res.send(req.session.user);
+  logger.info("Checking");
+  res.send("CHwecking");
 });
 
 app.use(

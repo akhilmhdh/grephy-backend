@@ -40,8 +40,9 @@ class Logger {
   constructor() {
     const prodTransport = new winston.transports.File({
       filename: "logs/error.log",
-      level: "error",
+      level: "info",
       handleExceptions: true,
+      maxsize: 5242880,
     });
     const transport = new winston.transports.Console({
       format: formatter,
@@ -53,6 +54,7 @@ class Logger {
       levels: customLevels.levels,
       transports: [process.env.NODE_ENV ? transport : prodTransport],
     });
+
     winston.addColors(customLevels.colors);
   }
 
@@ -82,3 +84,9 @@ class Logger {
 }
 
 export const logger = new Logger();
+
+export const stream = {
+  write: (message: string): void => {
+    logger.info(message);
+  },
+};
