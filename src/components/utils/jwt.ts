@@ -7,7 +7,7 @@ const JWTEncode = (data: any): string => {
   return jwt.sign(data, process.env.JWT_SECRET);
 };
 
-const JWTDecode = (data: any): string => {
+const JWTDecode = (data: string): any => {
   return jwt.verify(data, process.env.JWT_SECRET) as string;
 };
 

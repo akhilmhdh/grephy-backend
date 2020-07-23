@@ -22,7 +22,7 @@ import Joi from "@hapi/joi";
 const createChannelSchema = Joi.object({
   _user: Joi.string()
     .regex(/^[0-9a-fA-F]{24}$/)
-    .required("Unauthorized"),
+    .required(),
   name: Joi.string().min(1).max(50).trim().required(),
   description: Joi.string().min(1).max(150).trim().required(),
 });

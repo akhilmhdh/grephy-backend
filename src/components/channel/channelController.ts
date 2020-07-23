@@ -1,3 +1,4 @@
+import { RequestHandler } from "express";
 import JWT from "../utils/jwt";
 import santizeObject from "../utils/sanitizeObject";
 
@@ -5,7 +6,7 @@ import channelValidator from "./channelValidator";
 import channelService from "./channelService";
 
 // to create channels for a user
-const createChannel = async (req, res, next) => {
+const createChannel: RequestHandler = async (req, res, next) => {
   const { createChannelSchema } = channelValidator;
 
   try {
@@ -29,13 +30,13 @@ const createChannel = async (req, res, next) => {
   }
 };
 
-const readChannel = (req, res, next) => {
+const readChannel: RequestHandler = (req, res, next) => {
   res.send("Yo");
   next();
 };
 
 // update the channel for a user
-const updateChannel = async (req, res, next) => {
+const updateChannel: RequestHandler = async (req, res, next) => {
   const { updateChannelSchema } = channelValidator;
 
   try {
@@ -67,7 +68,7 @@ const updateChannel = async (req, res, next) => {
   }
 };
 
-const listChannels = async (req, res, next) => {
+const listChannels: RequestHandler = async (req, res, next) => {
   const { listChannelSchema } = channelValidator;
 
   try {
@@ -90,7 +91,7 @@ const listChannels = async (req, res, next) => {
 };
 
 // delete channel of a user
-const deleteChannel = async (req, res, next) => {
+const deleteChannel: RequestHandler = async (req, res, next) => {
   try {
     // userid and channel name via channel token
     const { userID } = JWT.JWTDecode(req.session.user);
