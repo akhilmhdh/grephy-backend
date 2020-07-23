@@ -14,7 +14,9 @@ const UserLogin = async ({
   name,
   email,
   provider,
-}: arg): Promise<InsertOneWriteOpResult<{ _id: unknown }>> => {
+}: arg): Promise<
+  InsertOneWriteOpResult<{ _id: unknown }> | Promise<any | null>
+> => {
   const collection = DB.client.db("Grephy").collection("users");
   // checks for existing user if found return it
   const existingUser = await collection.findOne({ uID, name, provider });

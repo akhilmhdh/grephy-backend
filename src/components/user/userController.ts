@@ -8,7 +8,6 @@ import userService from "./userService";
 const googleAuth: RequestHandler = (req, res, next) => {
   const url = googleService.getConnectionURL();
   res.redirect(url);
-  next();
 };
 
 // google redirect controller
@@ -19,10 +18,8 @@ const googleAuthCallback: RequestHandler = async (req, res, next) => {
     const token = await userService.googleOauth(code as string);
     req.session.user = token;
     res.send("logged in").status(200);
-    next();
   } catch (error) {
-    res.send(error).status(500);
-    next(error);
+    next({ statusCode: 500, message: error });
   }
 };
 
@@ -44,8 +41,7 @@ const githubAuthCallback: RequestHandler = async (req, res, next) => {
     res.send("logged in").status(200);
     next();
   } catch (error) {
-    res.send(error).status(500);
-    next(error);
+    next({ statusCode: 500, message: error });
   }
   next();
 };

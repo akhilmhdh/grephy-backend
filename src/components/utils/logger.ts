@@ -41,9 +41,12 @@ class Logger {
     const prodTransport = new winston.transports.File({
       filename: "logs/error.log",
       level: "error",
+      handleExceptions: true,
     });
     const transport = new winston.transports.Console({
       format: formatter,
+      level: "debug",
+      handleExceptions: true,
     });
     this.logger = winston.createLogger({
       level: process.env.NODE_ENV ? "trace" : "error",
