@@ -46,9 +46,8 @@ const githubOauth = async (code: string): Promise<string> => {
     email,
     provider: "github",
   });
-  if (error) {
-    throw error;
-  }
+  if (error) throw new ErrorHandler(417, "user validation failed");
+
   // to user collection
   const user = await userDAL.UserLogin(value);
   const userID = user._id ? user.ops[0]._id : user._id;

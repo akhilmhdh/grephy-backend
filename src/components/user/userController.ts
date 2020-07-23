@@ -17,7 +17,7 @@ const googleAuthCallback: RequestHandler = async (req, res, next) => {
   try {
     const token = await userService.googleOauth(code as string);
     req.session.user = token;
-    res.send("logged in").status(200);
+    res.json({ login: "success" }).status(200);
   } catch (error) {
     next({ statusCode: 500, message: error });
   }
@@ -29,7 +29,6 @@ const githubAuth: RequestHandler = (req, res, next) => {
   res.redirect(
     `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&scope=${scope}`
   );
-  next();
 };
 
 // github oauth callback controller
@@ -38,8 +37,7 @@ const githubAuthCallback: RequestHandler = async (req, res, next) => {
   try {
     const token = await userService.githubOauth(code as string);
     req.session.user = token;
-    res.send("logged in").status(200);
-    next();
+    res.json({ login: "success" }).status(200);
   } catch (error) {
     next({ statusCode: 500, message: error });
   }
@@ -52,8 +50,7 @@ const logOut: RequestHandler = (req, res, next) => {
   if (req.session.user) {
     req.session.user = null;
   }
-  res.send("Logged out").status(200);
-  next();
+  res.json({ logout: "success" }).status(200);
 };
 
 export default {
