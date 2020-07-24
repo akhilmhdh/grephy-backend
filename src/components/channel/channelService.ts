@@ -2,13 +2,21 @@
 import { ObjectID } from "mongodb";
 import channelDAL from "./channelDAL";
 
-const createChannel = async ({ _user, name, description }) => {
+interface createChannel {
+  _user: string;
+  name: string;
+  description: string;
+}
+
+const createChannel = async ({
+  _user,
+  name,
+  description,
+}: createChannel): Promise<> => {
   // create channel in database
   const channel = await channelDAL.createChannel({ _user, name, description });
   // return with token
-  return {
-    ...channel,
-  };
+  return channel;
 };
 
 const updateChannel = async (id, _user, channelUpdatedData) => {

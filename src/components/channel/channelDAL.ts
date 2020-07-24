@@ -1,16 +1,28 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable no-underscore-dangle */
 import DB from "../../db";
+import { InsertOneWriteOpResult } from "mongodb";
 
-const createChannel = async (databaseValue) => {
-  const database = new DB();
-  const collection = database.get.collection("channels");
+interface response {
+  err: string | null;
+  value: InsertOneWriteOpResult<{ _id: unknown }> | Promise<any | null>;
+}
 
+interface createChannel {
+  _user: string;
+  name: string;
+  description: string;
+}
+
+const createChannel = async (
+  databaseValue: createChannel
+): Promise<response> => {
+  const collection = DB.client.db("Grephy").collection("channels");
   const existingChannel = await collection.findOne(databaseValue);
-  if (existingChannel) throw "Channel already exisitng";
+  if (existingChannel) return { err: "Channel already exisitng", value: null };
   // add channel to the collection
   const channel = await collection.insertOne(databaseValue);
-  return channel.ops[0];
+  return { err: null, value: channel };
 };
 
 const updateChannel = async (query, channelUpdateData) => {
