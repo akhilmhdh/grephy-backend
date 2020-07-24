@@ -2,33 +2,45 @@
 import { ObjectID } from "mongodb";
 import channelDAL from "./channelDAL";
 
-interface createChannel {
-  _user: string;
-  name: string;
-  description: string;
-}
+import {
+  createChannel,
+  response,
+  querySchema,
+  updateChannelSchema,
+} from "./channel.interface";
+import { ErrorHandler } from "../utils/error";
 
 const createChannel = async ({
   _user,
   name,
   description,
-}: createChannel): Promise<> => {
+}: createChannel): Promise<response> => {
   // create channel in database
-  const channel = await channelDAL.createChannel({ _user, name, description });
+  const { err, value } = await channelDAL.createChannel({
+    _user,
+    name,
+    description,
+  });
+  if (err) throw new ErrorHandler(417, err);
   // return with token
-  return channel;
+  return value;
 };
 
-const updateChannel = async (id, _user, channelUpdatedData) => {
+const updateChannel = async (
+  channel: querySchema,
+  channelUpdatedData: updateChannelSchema
+): Promise<string> => {
   // update channel in database
-  const _id = new ObjectID(id);
-  const channel = await channelDAL.updateChannel(
-    { _id, _user },
+  const _id = new ObjectID(channel._id);
+
+  const { err, value } = await channelDAL.updateChannel(
+    { _id, _user: channel._user },
     channelUpdatedData
   );
+  if (err) throw new ErrorHandler(417, err);
   // return with token
-  if (channel.result.nModified) return "Updated Successfully";
-  return "Didn't changed anything";
+  if (value.result.nModified) return "Updated Successfully";
+  return "Updated, No changes";
 };
 
 // list all the channels user has

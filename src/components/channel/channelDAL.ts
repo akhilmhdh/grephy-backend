@@ -1,18 +1,12 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable no-underscore-dangle */
 import DB from "../../db";
-import { InsertOneWriteOpResult } from "mongodb";
-
-interface response {
-  err: string | null;
-  value: InsertOneWriteOpResult<{ _id: unknown }> | Promise<any | null>;
-}
-
-interface createChannel {
-  _user: string;
-  name: string;
-  description: string;
-}
+import {
+  createChannel,
+  updateChannel,
+  response,
+  querySchema,
+} from "./channel.interface";
 
 const createChannel = async (
   databaseValue: createChannel
@@ -25,21 +19,22 @@ const createChannel = async (
   return { err: null, value: channel };
 };
 
-const updateChannel = async (query, channelUpdateData) => {
-  const database = new DB();
-  const collection = database.get.collection("channels");
+const updateChannel = async (
+  query: querySchema,
+  channelUpdateData: updateChannel
+): Promise<response> => {
+  const collection = DB.client.db("Grephy").collection("channels");
 
   // find and update the channel
   const channel = await collection.updateOne(query, {
     $set: channelUpdateData,
   });
 
-  return channel;
+  return { err: null, value: channel };
 };
 
 const listChannels = async (user) => {
-  const database = new DB();
-  const collection = database.get.collection("channels");
+  const collection = DB.client.db("Grephy").collection("channels");
 
   // fetch all channels of the user
   const channel = await collection.find(user).toArray();

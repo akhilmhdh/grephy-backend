@@ -55,10 +55,10 @@ const updateChannel: RequestHandler = async (req, res, next) => {
     if (error) next(error);
 
     const sanitizedValue = santizeObject(value);
+    const channel = { _id: id, _user: userID as string };
 
     const updateStatus = await channelService.updateChannel(
-      id,
-      userID,
+      channel,
       sanitizedValue
     );
     res.send(updateStatus).status(200);
