@@ -1,15 +1,15 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import userController from "./userController";
+import userController from './userController';
 
 const router = Router();
 
-router.get("/auth/google", userController.googleAuth);
-router.get("/auth/google/callback", userController.googleAuthCallback);
+router.get('/auth/google', userController.googleAuth);
+router.get('/auth/google/callback', userController.googleAuthCallback);
 
-router.get("/auth/github", userController.githubAuth);
-router.get("/auth/github/callback", userController.githubAuthCallback);
+router.get('/auth/github', userController.githubAuth);
+router.get('/auth/github/callback', userController.githubAuthCallback);
 
-router.get("/logout", userController.logOut);
+router.get('/logout', userController.logOut);
 
 export default router;

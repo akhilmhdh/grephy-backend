@@ -1,15 +1,15 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import graphController from "./graphController";
+import graphController from './graphController';
 
 const router = Router();
 
-router.post("/create", graphController.createGraph);
+router.post('/create', graphController.createGraph);
 
-router.get("/read/:id", graphController.readGraph);
+router.get('/read/:id', graphController.readGraph);
 
-router.put("/update/;id", graphController.updateGraph);
+router.put('/update/;id', graphController.updateGraph);
 
-router.delete("/delete/:id", graphController.deleteGraph);
+router.delete('/delete/:id', graphController.deleteGraph);
 
 export default router;
