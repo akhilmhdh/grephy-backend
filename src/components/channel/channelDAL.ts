@@ -43,13 +43,12 @@ const listChannels = async (user: listChannel): Promise<response> => {
   return { err: null, value: channel };
 };
 
-const deleteChannel = async (query: querySchema) => {
-  const database = new DB();
-  const collection = database.get.collection("channels");
+const deleteChannel = async (query: querySchema): Promise<response> => {
+  const collection = DB.client.db("Grephy").collection("channels");
 
   // delete given channel of the user
   const channel = await collection.deleteOne(query);
-  return channel;
+  return { err: null, value: channel };
 };
 
 export default {

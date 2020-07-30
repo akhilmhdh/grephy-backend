@@ -4,6 +4,7 @@ import channelDAL from "./channelDAL";
 
 import {
   createChannel,
+  listChannel
   response,
   querySchema,
   updateChannelSchema,
@@ -44,10 +45,11 @@ const updateChannel = async (
 };
 
 // list all the channels user has
-const listChannels = async (user) => {
-  const channel = await channelDAL.listChannels(user);
+const listChannels = async (user:listChannel): Promise<response> => {
+  const {err,value} = await channelDAL.listChannels(user);
   // adds each channel with a token
-  return channel;
+  if (err) throw new ErrorHandler(417, err);
+  return value
 };
 
 // delete a channel of a user
