@@ -4,10 +4,10 @@ import channelDAL from "./channelDAL";
 
 import {
   createChannel,
-  listChannel
+  listChannel,
   response,
   querySchema,
-  updateChannelSchema,
+  updateChannel,
 } from "./channel.interface";
 import { ErrorHandler } from "../utils/error";
 
@@ -29,7 +29,7 @@ const createChannel = async ({
 
 const updateChannel = async (
   channel: querySchema,
-  channelUpdatedData: updateChannelSchema
+  channelUpdatedData: updateChannel
 ): Promise<string> => {
   // update channel in database
   const _id = new ObjectID(channel._id);
@@ -45,19 +45,22 @@ const updateChannel = async (
 };
 
 // list all the channels user has
-const listChannels = async (user:listChannel): Promise<response> => {
-  const {err,value} = await channelDAL.listChannels(user);
+const listChannels = async (user: listChannel): Promise<response> => {
+  const { err, value } = await channelDAL.listChannels(user);
   // adds each channel with a token
   if (err) throw new ErrorHandler(417, err);
-  return value
+  return value;
 };
 
 // delete a channel of a user
-const deleteChannel = async (id, _user) => {
+const deleteChannel = async (id: string, _user: string): Promise<string> => {
   // pass data to DAL layer
   const _id = new ObjectID(id);
-  const channel = await channelDAL.deleteChannel({ _id, _user });
-  if (channel.result.n) return "Deleted Successfully";
+  const { err, value } = await channelDAL.deleteChannel({ _id, _user });
+
+  if (err) throw new ErrorHandler(417, err);
+
+  if (value.result.n) return "Deleted Successfully";
   return "Channel Deletetion Failure";
 };
 
