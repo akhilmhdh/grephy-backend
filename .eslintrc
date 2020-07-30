@@ -19,7 +19,6 @@
   },
   "rules": {
     "prettier/prettier": ["error",{"endOfLine":"auto"}],
-    "linebreak-style": 0,
     "no-console": 2 
   }
 }
