@@ -9,7 +9,7 @@ export interface response {
 }
 
 export interface querySchema {
-  _id: ObjectID;
+  _id: ObjectID | string;
   _user: string;
 }
 
@@ -22,4 +22,8 @@ export interface createChannel {
 export interface updateChannel {
   name: string;
   description: string;
+}
+
+export interface listChannel {
+  _user: string;
 }

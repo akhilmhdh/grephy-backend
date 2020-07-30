@@ -4,6 +4,7 @@ import DB from "../../db";
 import {
   createChannel,
   updateChannel,
+  listChannel,
   response,
   querySchema,
 } from "./channel.interface";
@@ -33,15 +34,16 @@ const updateChannel = async (
   return { err: null, value: channel };
 };
 
-const listChannels = async (user) => {
+const listChannels = async (user: listChannel): Promise<response> => {
   const collection = DB.client.db("Grephy").collection("channels");
 
   // fetch all channels of the user
   const channel = await collection.find(user).toArray();
-  return channel;
+
+  return { err: null, value: channel };
 };
 
-const deleteChannel = async (query) => {
+const deleteChannel = async (query: querySchema) => {
   const database = new DB();
   const collection = database.get.collection("channels");
 

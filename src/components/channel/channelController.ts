@@ -24,7 +24,6 @@ const createChannel: RequestHandler = async (req, res, next) => {
     // create channel in db
     const channel = await channelService.createChannel(value);
     res.send(channel).status(200);
-    next();
   } catch (error) {
     res.send(error).status(500);
   }
@@ -61,10 +60,10 @@ const updateChannel: RequestHandler = async (req, res, next) => {
       channel,
       sanitizedValue
     );
-    res.send(updateStatus).status(200);
-    next();
+
+    res.json({ status: 200, result: updateStatus }).status(200);
   } catch (error) {
-    res.send(error).status(500);
+    next(error);
   }
 };
 
@@ -83,9 +82,7 @@ const listChannels: RequestHandler = async (req, res, next) => {
     // service to delete a channel
     const channel = await channelService.listChannels(value);
     res.send(channel).status(200);
-    next();
   } catch (error) {
-    res.status(500);
     next(error);
   }
 };
