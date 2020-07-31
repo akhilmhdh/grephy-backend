@@ -97,7 +97,7 @@ const deleteChannel: RequestHandler = async (req, res, next) => {
 
         // status of deletion
         const status = await channelService.deleteChannel(id, userID);
-        res.send(status).status(200);
+        res.json({ status: 200, message: status }).status(200);
         next();
     } catch (error) {
         next({ stateCode: 417, message: error.message });

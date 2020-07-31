@@ -24,7 +24,7 @@ const createChannel = async ({
     });
     if (err) throw new ErrorHandler(417, err);
     // return with token
-    return value;
+    return value.ops[0];
 };
 
 const updateChannel = async (
