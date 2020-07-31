@@ -18,8 +18,9 @@ const googleAuthCallback: RequestHandler = async (req, res, next) => {
         const token = await userService.googleOauth(code as string);
         req.session.user = token;
         res.json({ login: 'success' }).status(200);
+        next();
     } catch (error) {
-        next({ statusCode: 500, message: error });
+        next({ statusCode: 500, message: error.message });
     }
 };
 
@@ -39,7 +40,7 @@ const githubAuthCallback: RequestHandler = async (req, res, next) => {
         req.session.user = token;
         res.json({ login: 'success' }).status(200);
     } catch (error) {
-        next({ statusCode: 500, message: error });
+        next({ statusCode: 500, message: error.message });
     }
     next();
 };

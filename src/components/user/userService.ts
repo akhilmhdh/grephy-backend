@@ -29,7 +29,7 @@ const googleOauth = async (code: string): Promise<string> => {
 
     // to user collection
     const user = await userDAL.UserLogin(value);
-    const userID = user._id ? user.ops[0]._id : user._id;
+    const userID = user._id ? user._id : user.ops[0]._id;
     const token = JWT.JWTEncode({ userID });
     return token;
 };
@@ -50,7 +50,7 @@ const githubOauth = async (code: string): Promise<string> => {
 
     // to user collection
     const user = await userDAL.UserLogin(value);
-    const userID = user._id ? user.ops[0]._id : user._id;
+    const userID = user._id ? user._id : user.ops[0]._id;
     const token = JWT.JWTEncode({ userID });
     return token;
 };

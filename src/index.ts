@@ -3,12 +3,12 @@ import cookieSession from 'cookie-session';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import { handleError, ErrorHandler } from './components/utils/error';
-import { stream, logger } from './config/logger';
+import { stream } from './config/logger';
 
 dotenv.config();
 
 import user from './components/user';
-// import channel from "./components/channel";
+import channel from './components/channel';
 // import graph from "./components/graph";
 
 const app = express();
@@ -36,12 +36,11 @@ app.use(express.json());
 
 // express routes
 app.use('/users', user);
-// app.use("/channels", channel);
+app.use('/channels', channel);
 // app.use("/channels/graph", graph);
 
-app.get('/', (req, res) => {
-    logger.info('Checking');
-    res.send('CHwecking');
+app.get('/', (req: Request, res: Response) => {
+    res.send(req.session.user);
 });
 
 app.use(
