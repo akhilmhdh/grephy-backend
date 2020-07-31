@@ -25,13 +25,12 @@ const createChannel: RequestHandler = async (req, res, next) => {
         const channel = await channelService.createChannel(value);
         res.send(channel).status(200);
     } catch (error) {
-        res.send(error).status(500);
+        next({ statusCode: 417, message: error.message });
     }
 };
 
 const readChannel: RequestHandler = (req, res, next) => {
     res.send('Yo');
-    next();
 };
 
 // update the channel for a user
@@ -51,7 +50,7 @@ const updateChannel: RequestHandler = async (req, res, next) => {
         });
 
         // validating
-        if (error) next(error);
+        if (error) next({ stateCode: 417, message: 'validation failed' });
 
         const sanitizedValue = santizeObject(value);
         const channel = { _id: id, _user: userID as string };
@@ -63,7 +62,7 @@ const updateChannel: RequestHandler = async (req, res, next) => {
 
         res.json({ status: 200, result: updateStatus }).status(200);
     } catch (error) {
-        next(error);
+        next({ statusCode: 417, message: error.message });
     }
 };
 
@@ -78,12 +77,12 @@ const listChannels: RequestHandler = async (req, res, next) => {
             _user: userID
         });
 
-        if (error) next(error);
+        if (error) next({ stateCode: 417, message: 'validation failed' });
         // service to delete a channel
         const channel = await channelService.listChannels(value);
         res.send(channel).status(200);
     } catch (error) {
-        next(error);
+        next({ stateCode: 417, message: error.message });
     }
 };
 
@@ -101,7 +100,7 @@ const deleteChannel: RequestHandler = async (req, res, next) => {
         res.send(status).status(200);
         next();
     } catch (error) {
-        next(error);
+        next({ stateCode: 417, message: error.message });
     }
 };
 
