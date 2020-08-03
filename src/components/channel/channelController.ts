@@ -19,13 +19,13 @@ const createChannel: RequestHandler = async (req, res, next) => {
             name,
             description
         });
-        if (error) next(error);
+        if (error) next({ stateCode: 417, message: 'validation failed' });
 
         // create channel in db
         const channel = await channelService.createChannel(value);
         res.send(channel).status(200);
     } catch (error) {
-        next({ statusCode: 417, message: error.message });
+        next(error);
     }
 };
 
@@ -62,7 +62,7 @@ const updateChannel: RequestHandler = async (req, res, next) => {
 
         res.json({ status: 200, result: updateStatus }).status(200);
     } catch (error) {
-        next({ statusCode: 417, message: error.message });
+        next(error);
     }
 };
 
@@ -82,7 +82,7 @@ const listChannels: RequestHandler = async (req, res, next) => {
         const channel = await channelService.listChannels(value);
         res.send(channel).status(200);
     } catch (error) {
-        next({ stateCode: 417, message: error.message });
+        next(error);
     }
 };
 
@@ -100,7 +100,7 @@ const deleteChannel: RequestHandler = async (req, res, next) => {
         res.json({ status: 200, message: status }).status(200);
         next();
     } catch (error) {
-        next({ stateCode: 417, message: error.message });
+        next(error);
     }
 };
 

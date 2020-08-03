@@ -1,28 +1,23 @@
 {
-  "compilerOptions": {
-    "outDir": "./dist/",
-    "noImplicitAny": true,
-    "module": "commonjs",
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "target": "es2017",
-    "esModuleInterop": true,
-    "types": [],
-    "typeRoots": ["src/types", "node_modules/@types"],
-    "lib": [
-      "es2017",
-      "dom"
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "target": "es2017",
+        "esModuleInterop": true,
+        "types": [],
+        "typeRoots": ["src/types", "node_modules/@types"],
+        "lib": ["es2017", "dom"]
+    },
+    "include": ["src/*"],
+    "exclude": [
+        "node_modules",
+        "./node_modules",
+        "./node_modules/*",
+        "./node_modules/@types/node/index.d.ts"
     ]
-  },
-  "include": [
-    "src/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "./node_modules",
-    "./node_modules/*",
-    "./node_modules/@types/node/index.d.ts",
-  ]
 }

@@ -1,13 +1,20 @@
 import GraphDAL from './graphDAL';
 
-const createGraph = async (_user, _channel, value, next) => {
-    try {
-        const graph = await GraphDAL.createGraph({ _user, _channel, ...value });
-        return graph;
-    } catch (error) {
-        next(error);
-    }
-    return null;
+import { ErrorHandler } from '../utils/error';
+import { createGraph } from './graph.interface';
+const createGraph = async ({
+    _user,
+    _channel,
+    data
+}: createGraph): Promise<response> => {
+    const { err, value } = await GraphDAL.createGraph({
+        _user,
+        _channel,
+        ...data
+    });
+
+    if (err) throw new ErrorHandler(417, err);
+    return value.ops[0];
 };
 
 export default {

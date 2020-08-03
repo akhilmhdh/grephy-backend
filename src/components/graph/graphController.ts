@@ -1,8 +1,9 @@
 import graphValidator from './graphValidator';
 import graphService from './graphService';
+import { RequestHandler } from 'express';
 import JWT from '../utils/jwt';
 
-const createGraph = async (req, res, next) => {
+const createGraph: RequestHandler = async (req, res, next) => {
     // parse token and validator
     const { userID } = JWT.JWTDecode(req.session.user);
     const { createGraphSchema } = graphValidator;
@@ -18,14 +19,9 @@ const createGraph = async (req, res, next) => {
             yAxis
         });
 
-        if (error) next(error);
+        if (error) next({ stateCode: 417, message: 'validation failed' });
 
-        const graph = await graphService.createGraph(
-            userID,
-            _channel,
-            value,
-            next
-        );
+        const graph = await graphService.createGraph(userID, _channel, value);
 
         res.send(graph).status(200);
     } catch (error) {
@@ -33,17 +29,17 @@ const createGraph = async (req, res, next) => {
     }
 };
 
-const readGraph = (req, res, next) => {
+const readGraph: RequestHandler = (req, res, next) => {
     res.send('Yo');
     next();
 };
 
-const updateGraph = (req, res, next) => {
+const updateGraph: RequestHandler = (req, res, next) => {
     res.send('Yo');
     next();
 };
 
-const deleteGraph = (req, res, next) => {
+const deleteGraph: RequestHandler = (req, res, next) => {
     res.send('Yo');
     next();
 };
